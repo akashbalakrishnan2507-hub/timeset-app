@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="LOGIC HUNT at ZENOFEST - Futuristic Live Event Countdown and Timer Screen">
+  <meta name="theme-color" content="#030712">
+  <title>LOGIC HUNT | ZENOFEST - Live Event Timer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <!-- Futuristic Canvas Background (Circuits, Nodes, Logic Symbols, Particles) -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Floating Glowing Logic Hunt Bulbs (Idea / Solution Bulbs) -->
+  <div class="bg-logic-bulbs-container" aria-hidden="true">
+    <div class="logic-bulb-wrapper bulb-left">
+      <img src="bulb.jpg" alt="Logic Hunt Bulb" class="logic-bulb-img">
+    </div>
+    <div class="logic-bulb-wrapper bulb-right">
+      <img src="bulb.jpg" alt="Logic Hunt Bulb" class="logic-bulb-img">
+    </div>
+  </div>
+
+  <!-- Main Application Container -->
+  <main class="app-container">
+
+    <!-- TOP BAR: Branding & Quick Actions -->
+    <header class="top-bar">
+      <!-- Logic Hunt & Zenofest Visual Identity -->
+      <div class="brand-container">
+        <div class="brand-icon-wrapper" aria-hidden="true">
+          <!-- Glowing Logic Bulb Icon -->
+          <img src="bulb.jpg" alt="Logic Hunt Icon" class="brand-bulb-icon">
+        </div>
+
+        <div class="brand-titles">
+          <h1 class="brand-title">
+            <span class="title-logic">LOGIC</span>
+            <span class="title-hunt">HUNT</span>
+          </h1>
+          <div class="brand-subtitle">ZENOFEST</div>
+        </div>
+      </div>
+
+      <!-- Top Right Controls: Sound & Fullscreen -->
+      <div class="top-actions">
+        <button id="btn-sound-toggle" class="btn-pill" title="Toggle Audio (Hotkey: M)" aria-label="Toggle Sound">
+          <svg id="sound-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+          <span id="sound-label">SOUND ON</span>
+        </button>
+
+        <button id="btn-fullscreen" class="btn-pill" title="Toggle Fullscreen (Hotkey: F)"
+          aria-label="Toggle Fullscreen">
+          <svg id="fullscreen-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3">
+            </path>
+          </svg>
+          <span id="fullscreen-label">FULL SCREEN</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- CENTER STAGE: Huge Circular Timer & Status -->
+    <section class="center-stage">
+      <!-- STAFF & STUDENT COORDINATORS -->
+      <section class="coordinators-bar" aria-label="Event Coordinators">
+
+        <!-- Staff Coordinators -->
+        <div class="coordinators-group">
+          <div class="coordinators-title staff-title">
+            <span class="coord-icon">◈</span>
+            <span>STAFF COORDINATORS</span>
+            <span class="coord-icon">◈</span>
+          </div>
+          <div class="coordinators-list">
+            <div class="coord-badge">
+              <span class="coord-dot"></span>
+              <span class="coord-name">T. BharathiLakshmi</span>
+            </div>
+            <div class="coord-badge">
+              <span class="coord-dot"></span>
+              <span class="coord-name">M. Gomathi Sathya</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Student Coordinators -->
+        <div class="coordinators-group">
+          <div class="coordinators-title student-title">
+            <span class="coord-icon student-icon">◈</span>
+            <span>STUDENT COORDINATORS</span>
+            <span class="coord-icon student-icon">◈</span>
+          </div>
+          <div class="coordinators-list">
+            <div class="coord-badge">
+              <span class="coord-dot student-dot"></span>
+              <span class="coord-name">K.Bharathan</span>
+            </div>
+            <div class="coord-badge">
+              <span class="coord-dot student-dot"></span>
+              <span class="coord-name">B.Akash</span>
+            </div>
+            <div class="coord-badge">
+              <span class="coord-dot student-dot"></span>
+              <span class="coord-name">K. Anu</span>
+            </div>
+            <div class="coord-badge">
+              <span class="coord-dot student-dot"></span>
+              <span class="coord-name">K. Jothilakshmi</span>
+            </div>
+            <div class="coord-badge">
+              <span class="coord-dot student-dot"></span>
+              <span class="coord-name">K. Lavanya</span>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <div id="timer-container" class="timer-container">
+        <div class="timer-halo-ring">
+          <!-- Circular Animated Progress Ring (SVG) -->
+          <svg class="progress-svg" viewBox="0 0 400 400">
+            <defs>
+              <linearGradient id="cyan-purple-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#00f0ff" />
+                <stop offset="60%" stop-color="#38bdf8" />
+                <stop offset="100%" stop-color="#a855f7" />
+              </linearGradient>
+              <linearGradient id="amber-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#f59e0b" />
+                <stop offset="100%" stop-color="#fbbf24" />
+              </linearGradient>
+              <linearGradient id="red-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ef4444" />
+                <stop offset="100%" stop-color="#f87171" />
+              </linearGradient>
+            </defs>
+
+            <!-- Background Track -->
+            <circle class="progress-track" cx="200" cy="200" r="176" />
+            <!-- Active Animated Progress -->
+            <circle id="circle-progress" class="progress-bar" cx="200" cy="200" r="176" />
+          </svg>
+
+          <!-- Ambient Radial Halo -->
+          <div class="inner-glow-backdrop"></div>
+
+          <!-- Main Timer Digits & Status Pill -->
+          <div class="timer-content">
+            <div id="timer-digits" class="timer-digits" aria-live="polite">20:00</div>
+
+            <div id="status-pill" class="status-pill live">
+              <span class="status-dot"></span>
+              <span id="status-label">STANDBY</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BOTTOM BAR: Coordinator Live Controls Dock -->
+    <footer class="bottom-dock-wrapper">
+      <nav class="controls-dock" aria-label="Timer Controls">
+        <!-- Start / Pause / Resume Primary Button -->
+        <button id="btn-start-pause" class="ctrl-btn btn-primary" title="Start/Pause (Space)">
+          <svg id="btn-start-pause-icon" viewBox="0 0 24 24" fill="currentColor">
+            <polygon points="5,3 19,12 5,21"></polygon>
+          </svg>
+          <span id="btn-start-pause-label">START</span>
+        </button>
+
+        <!-- Quick Time Extension Controls -->
+        <button id="btn-add-1" class="ctrl-btn btn-add-time" title="Add 1 Minute">
+          <span>＋1 MIN</span>
+        </button>
+        <button id="btn-add-5" class="ctrl-btn btn-add-time" title="Add 5 Minutes">
+          <span>＋5 MIN</span>
+        </button>
+        <button id="btn-add-10" class="ctrl-btn btn-add-time" title="Add 10 Minutes">
+          <span>＋10 MIN</span>
+        </button>
+
+        <!-- Set Custom Duration Modal Trigger -->
+        <button id="btn-open-modal" class="ctrl-btn" title="Set Custom Duration">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path
+              d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+            </path>
+          </svg>
+          <span>SET TIME</span>
+        </button>
+
+        <!-- Reset Button -->
+        <button id="btn-reset" class="ctrl-btn btn-reset" title="Reset to Initial Time">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+            <path d="M3 3v5h5"></path>
+          </svg>
+          <span>RESET</span>
+        </button>
+      </nav>
+
+      <div class="shortcuts-hint text-center">
+        <span class="kbd-badge">SPACE</span> Start / Pause &nbsp;|&nbsp;
+        <span class="kbd-badge">F</span> Fullscreen &nbsp;|&nbsp;
+        <span class="kbd-badge">M</span> Mute
+      </div>
+    </footer>
+  </main>
+
+  <!-- CINEMATIC STAGE OPENING SEQUENCE OVERLAY -->
+  <div id="stage-opening-overlay" class="stage-opening-overlay" aria-hidden="true">
+    <div class="opening-content">
+      <div id="shockwave-ring" class="shockwave-ring"></div>
+
+      <!-- Stage 1: READY? -->
+      <div id="ready-text" class="ready-text">READY?</div>
+
+      <!-- Stage 2, 3, 4: 3, 2, 1 -->
+      <div id="countdown-number" class="countdown-number">3</div>
+
+      <!-- Stage 5: START! -->
+      <h1 id="start-burst-text" class="start-burst-text">START!</h1>
+    </div>
+  </div>
+
+  <!-- MODAL: SET EVENT TIME -->
+  <div id="modal-backdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="modal-title" class="modal-title">
+          <span class="modal-title-dot"></span>
+          SET EVENT TIME
+        </h2>
+      </div>
+
+      <div class="time-inputs-row">
+        <div class="time-input-group">
+          <label for="input-hours">Hours</label>
+          <input id="input-hours" class="time-input-box" type="number" min="0" max="23" value="00">
+        </div>
+        <div class="time-colon">:</div>
+        <div class="time-input-group">
+          <label for="input-minutes">Minutes</label>
+          <input id="input-minutes" class="time-input-box" type="number" min="0" max="59" value="20">
+        </div>
+        <div class="time-colon">:</div>
+        <div class="time-input-group">
+          <label for="input-seconds">Seconds</label>
+          <input id="input-seconds" class="time-input-box" type="number" min="0" max="59" value="00">
+        </div>
+      </div>
+
+      <!-- Quick Presets -->
+      <div class="presets-label">Quick Presets:</div>
+      <div class="presets-container">
+        <button type="button" class="preset-chip" data-mins="5">5 MIN</button>
+        <button type="button" class="preset-chip" data-mins="10">10 MIN</button>
+        <button type="button" class="preset-chip" data-mins="15">15 MIN</button>
+        <button type="button" class="preset-chip" data-mins="20">20 MIN</button>
+        <button type="button" class="preset-chip" data-mins="30">30 MIN</button>
+        <button type="button" class="preset-chip" data-mins="45">45 MIN</button>
+        <button type="button" class="preset-chip" data-mins="60">60 MIN</button>
+      </div>
+
+      <div class="modal-actions">
+        <button id="btn-modal-cancel" type="button" class="modal-btn btn-cancel">CANCEL</button>
+        <button id="btn-modal-apply" type="button" class="modal-btn btn-apply">APPLY</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="audio.js"></script>
+  <script src="background.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>

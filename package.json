@@ -1,0 +1,12 @@
+{
+  "name": "logichunt-zenofest",
+  "version": "1.0.0",
+  "description": "LOGIC HUNT at ZENOFEST - Futuristic Live Event Timer & Screen",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
